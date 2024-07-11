@@ -3,4 +3,5 @@
 .ipynb_checkpoints
 __pycache__
 /dist/
+/Image-ExifTool-12.87/
 /*.egg-info
