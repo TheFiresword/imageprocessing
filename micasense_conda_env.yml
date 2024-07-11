@@ -1,0 +1,28 @@
+name: micasense
+channels:
+  - conda-forge
+dependencies:
+  - python=3.8
+  - opencv=4.8
+  - numpy
+  - jupyter
+  - matplotlib
+  - pysolar
+  - gdal
+  - scikit-image
+  - pytest
+  - git
+  - git-lfs
+  - pandas
+  - imageio
+  - nb_conda
+  - requests
+  - packaging
+  - pip
+  - pytest-xdist
+  - pip:
+    - pyzbar
+    - mapboxgl
+    - pyexiftool
+    - jenkspy
+    - rawpy
