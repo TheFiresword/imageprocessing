@@ -1,0 +1,17 @@
+opencv-python>=4.8
+numpy
+jupyter
+matplotlib
+pyexiftool 
+pysolar 
+gdal 
+scikit-image 
+pytest 
+imageio 
+nb_conda 
+requests 
+packaging 
+pytest-xdistpyzbar 
+mapboxgl 
+jenkspy 
+rawpy

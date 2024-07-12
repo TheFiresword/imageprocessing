@@ -1,0 +1,6 @@
+Band Name	Center Wavelength (nm)	Bandwidth (nm)	Average
+Blue		475						20				0.67
+Green		560						20				0.69
+Red			668						10				0.68
+Red Edge	717						10				0.67
+Near IR		840						40				0.61
