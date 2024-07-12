@@ -197,7 +197,10 @@ def align(pair):
     else:
         # warp_matrix = np.array([[1,0,0],[0,1,0]], dtype=np.float32)
         warp_matrix = np.array([[1, 0, translations[1]], [0, 1, translations[0]]], dtype=np.float32)
-
+    
+    #pair['debug'] = True#+
+    #print("Ref image shape : ", pair['ref_image'].shape)#+
+    
     w = pair['ref_image'].shape[1]
 
     if pair['pyramid_levels'] is None:
@@ -230,7 +233,14 @@ def align(pair):
             gray2_pyr[0] = gaussian(normalize(gray2_pyr[0]))
             gray2_pyr.insert(0, cv2.resize(gray2_pyr[0], None, fx=1 / 2, fy=1 / 2,
                                            interpolation=cv2.INTER_AREA))
-
+        
+        nan_in_gray1_pyr = any([np.isnan(layer).any() for layer in gray1_pyr])#+
+        values_gray1_pyr = min([np.nanmin(layer)for layer in gray1_pyr]), max([np.nanmax(layer)for layer in gray1_pyr])
+        nan_in_gray2_pyr = any([np.isnan(layer).any() for layer in gray2_pyr])#+
+        values_gray2_pyr = min([np.nanmin(layer)for layer in gray2_pyr]), max([np.nanmax(layer)for layer in gray2_pyr])
+        assert not nan_in_gray1_pyr and not nan_in_gray2_pyr, "Nan values in image pyramide"#+
+        #print("Gray1 image : ", values_gray1_pyr, " Vs gray2 image : ", values_gray2_pyr)#+
+        
         # Terminate the optimizer if either the max iterations or the threshold are reached
         criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, max_iterations, epsilon_threshold)
         # run pyramid ECC
@@ -288,8 +298,10 @@ def align_capture(capture, ref_index=None, warp_mode=cv2.MOTION_HOMOGRAPHY, max_
         if capture.camera_model == 'RedEdge-P' or capture.camera_model == 'Altum-PT':
             ref_index = 5
     # Match other bands to this reference image (index into capture.images[])
+    
+    
     ref_img = capture.images[ref_index].undistorted(capture.images[ref_index].radiance()).astype('float32')
-
+    
     if capture.has_rig_relatives():
         warp_matrices_init = capture.get_warp_matrices(ref_index=ref_index)
     else:
